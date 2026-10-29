@@ -6,7 +6,7 @@
 # See AGENTS.md (or README.md) for a full guide.
 # ─────────────────────────────────────────────────────────────────────────────
 
-name: Ana Exemplo
+name: Agatha Heindrickson
 # Photo used in the hero and About section (path from the repository root).
 avatar: content/assets/avatar.jpg
 location: São Paulo, Brasil
@@ -42,7 +42,7 @@ theme:
     body: ""
 
 contact:
-  email: ana@example.com
+  email: agatha@example.com
   # Full international number; shown as a WhatsApp button.
   whatsapp: "+55 11 90000-0000"
   links:
