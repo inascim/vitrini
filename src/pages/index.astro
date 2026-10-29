@@ -1,0 +1,37 @@
+---
+import { config } from '../lib/config';
+import { localeHref } from '../lib/url';
+import { nativeLanguageName } from '../lib/i18n';
+
+// The root sends visitors to their browser's language when the site supports
+// it, otherwise to the Default Locale.
+const targets = Object.fromEntries(config.locales.map((l) => [l.toLowerCase(), localeHref(l)]));
+const fallback = localeHref(config.defaultLocale);
+---
+
+<!doctype html>
+<html lang={config.defaultLocale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{config.name}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={fallback} />
+    <script is:inline define:vars={{ targets, fallback }}>
+      const prefs = navigator.languages?.length ? navigator.languages : [navigator.language || ''];
+      let target = fallback;
+      for (const pref of prefs) {
+        const p = pref.toLowerCase();
+        const match = targets[p] || targets[p.split('-')[0]];
+        if (match) { target = match; break; }
+      }
+      location.replace(target + location.hash);
+    </script>
+    <noscript><meta http-equiv="refresh" content={`0; url=${fallback}`} /></noscript>
+  </head>
+  <body>
+    <ul>
+      {config.locales.map((l) => <li><a href={localeHref(l)} hreflang={l}>{nativeLanguageName(l)}</a></li>)}
+    </ul>
+  </body>
+</html>

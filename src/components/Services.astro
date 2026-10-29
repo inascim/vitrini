@@ -1,0 +1,27 @@
+---
+import type { Translate } from '../lib/i18n';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  services: { title: string; description: string }[];
+  t: Translate;
+  text?: { title?: string; intro?: string };
+}
+
+const { services, t, text } = Astro.props;
+---
+
+<section class="section container" id="services">
+  <SectionHeading title={text?.title ?? t('section.services')} intro={text?.intro} />
+  <ol class="services">
+    {
+      services.map((s, i) => (
+        <li class="service reveal">
+          <span class="service-index">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{s.title}</h3>
+          <p>{s.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>

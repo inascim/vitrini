@@ -1,0 +1,43 @@
+meta:
+  title: Ana Exemplo — Marketing Digital
+  description: Estrategista de marketing digital especializada em mídia paga, conteúdo e crescimento para marcas brasileiras.
+
+hero:
+  role: Estrategista de Marketing Digital
+  # Wrap words in *asterisks* to highlight them in the accent color.
+  headline: Campanhas que viram *resultado*.
+  intro: Ajudo marcas a crescer com mídia paga, conteúdo para redes sociais e SEO — sempre guiada por dados, nunca por achismo.
+  availability: Disponível para novos projetos
+
+# Optional: rename sections or add a short intro under their titles.
+sections:
+  cases:
+    title: Cases
+    intro: Uma seleção de campanhas e projetos recentes, com os números que importam.
+  contact:
+    title: Vamos fazer sua marca *crescer*?
+    intro: Conte um pouco sobre o seu projeto. Respondo em até um dia útil.
+
+services:
+  - title: Mídia paga
+    description: Planejamento e gestão de campanhas em Meta Ads, Google Ads e TikTok Ads, com foco em ROAS e custo por aquisição.
+  - title: Social media
+    description: Estratégia de conteúdo, calendário editorial e direção criativa para Instagram, TikTok e LinkedIn.
+  - title: SEO e conteúdo
+    description: Auditoria técnica, pesquisa de palavras-chave e produção de conteúdo que gera tráfego orgânico qualificado.
+  - title: CRM e e-mail
+    description: Réguas de relacionamento e automações que convertem leads em clientes e clientes em fãs.
+
+testimonials:
+  - quote: A Ana transformou nossa Black Friday. Batemos a meta de faturamento em dois dias.
+    name: Marina Costa
+    role: Head de E-commerce, Aurora Calçados
+  - quote: Estratégia clara, relatórios transparentes e muita criatividade. Recomendo de olhos fechados.
+    name: Pedro Almeida
+    role: Fundador, Café Serra Alta
+  - quote: Em seis meses, o orgânico virou nosso principal canal de novos pacientes.
+    name: Dra. Luiza Ramos
+    role: Diretora, Clínica Vida Plena
+
+# Optional: override any interface label (see src/lib/i18n.ts for all keys).
+ui: {}

@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import { config } from '../lib/config';
+import { resolveImage } from '../lib/assets';
+import type { Translate } from '../lib/i18n';
+
+interface Props {
+  t: Translate;
+  text?: { title?: string; intro?: string };
+}
+
+const { t, text } = Astro.props;
+---
+
+<section class="section container clients" id="clients">
+  <p class="eyebrow reveal">{text?.title ?? t('section.clients')}</p>
+  <ul class="client-list reveal">
+    {
+      config.clients.map((c) => {
+        const content = c.logo ? (
+          <Image src={resolveImage(c.logo)} alt={c.name} height={40} class="client-logo" />
+        ) : (
+          <span class="client-name">{c.name}</span>
+        );
+        return <li>{c.url ? <a href={c.url} rel="noopener" target="_blank">{content}</a> : content}</li>;
+      })
+    }
+  </ul>
+</section>

@@ -1,0 +1,63 @@
+---
+import { config } from '../lib/config';
+import type { Translate } from '../lib/i18n';
+
+interface Props {
+  t: Translate;
+}
+
+const { t } = Astro.props;
+const { ga4, metaPixel } = config.analytics;
+const enabled = Boolean(ga4 || metaPixel);
+---
+
+{
+  enabled && (
+    <>
+      <div class="consent" id="consent" hidden role="dialog" aria-live="polite" aria-label={t('consent.text')}>
+        <p>{t('consent.text')}</p>
+        <div class="consent-actions">
+          <button type="button" class="btn btn-ghost" data-consent="denied">{t('consent.decline')}</button>
+          <button type="button" class="btn btn-primary" data-consent="granted">{t('consent.accept')}</button>
+        </div>
+      </div>
+      <script is:inline define:vars={{ ga4, metaPixel }}>
+        // Analytics scripts load only after the visitor accepts (LGPD / GDPR).
+        const KEY = 'vitrine-consent';
+        const read = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
+        const write = (v) => { try { localStorage.setItem(KEY, v); } catch {} };
+
+        function load() {
+          if (ga4) {
+            const s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ga4);
+            document.head.appendChild(s);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function () { window.dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', ga4);
+          }
+          if (metaPixel) {
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            window.fbq('init', metaPixel);
+            window.fbq('track', 'PageView');
+          }
+        }
+
+        const banner = document.getElementById('consent');
+        const choice = read();
+        if (choice === 'granted') load();
+        else if (choice !== 'denied') banner.hidden = false;
+
+        banner.addEventListener('click', (e) => {
+          const value = e.target.closest('[data-consent]')?.dataset.consent;
+          if (!value) return;
+          write(value);
+          banner.hidden = true;
+          if (value === 'granted') load();
+        });
+      </script>
+    </>
+  )
+}

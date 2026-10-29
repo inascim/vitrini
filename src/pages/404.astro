@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../lib/config';
+import { getLocaleContent } from '../lib/content';
+import { localeHref } from '../lib/url';
+
+const locale = config.defaultLocale;
+const { t } = await getLocaleContent(locale);
+---
+
+<Base locale={locale} t={t} title={`${t('notFound.title')} — ${config.name}`} description={t('notFound.title')} path="">
+  <section class="section container not-found">
+    <h1>404</h1>
+    <p>{t('notFound.title')}</p>
+    <a class="btn btn-primary" href={localeHref(locale)}>{t('notFound.back')}</a>
+  </section>
+</Base>

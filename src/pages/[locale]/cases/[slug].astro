@@ -1,0 +1,118 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../../layouts/Base.astro';
+import Media from '../../../components/Media.astro';
+import { config } from '../../../lib/config';
+import { getCases, getLocaleContent } from '../../../lib/content';
+import { languageNameIn } from '../../../lib/i18n';
+import { caseHref, localeHref } from '../../../lib/url';
+import { year } from '../../../lib/format';
+
+export async function getStaticPaths() {
+  if (!config.sections.cases) return [];
+  const paths = [];
+  for (const locale of config.locales) {
+    const cases = await getCases(locale);
+    for (const [i, item] of cases.entries()) {
+      paths.push({ params: { locale, slug: item.slug }, props: { item, next: cases[(i + 1) % cases.length] } });
+    }
+  }
+  return paths;
+}
+
+const { locale } = Astro.params;
+const { item, next } = Astro.props;
+const { t, entry: site } = await getLocaleContent(locale);
+const { meta, text } = item;
+const data = text.entry.data;
+const { Content } = await render(text.entry);
+---
+
+<Base
+  locale={locale}
+  t={t}
+  title={`${data.title} — ${config.name}`}
+  description={data.summary}
+  path={`cases/${item.slug}`}
+  image={meta.data.cover}
+>
+  <article class="case container">
+    <a class="back-link" href={`${localeHref(locale)}#cases`}>← {site.data.sections.cases?.title ?? t('cases.back')}</a>
+
+    {
+      !text.translated && (
+        <p class="notice" role="note">
+          {t('cases.untranslated', {
+            language: languageNameIn(locale, locale),
+            fallback: languageNameIn(text.locale, locale),
+          })}
+        </p>
+      )
+    }
+
+    <header class="case-header" lang={text.locale}>
+      {data.tags.length > 0 && <ul class="tags reveal">{data.tags.map((tag) => <li>{tag}</li>)}</ul>}
+      <h1 class="reveal">{data.title}</h1>
+      <p class="case-lede reveal">{data.summary}</p>
+      <dl class="case-facts reveal">
+        {meta.data.client && (<div><dt>{t('cases.client')}</dt><dd>{meta.data.client}</dd></div>)}
+        {data.role && (<div><dt>{t('cases.role')}</dt><dd>{data.role}</dd></div>)}
+        <div><dt>{t('cases.year')}</dt><dd>{year(meta.data.date)}</dd></div>
+      </dl>
+    </header>
+
+    <Image
+      class="case-hero-image reveal"
+      src={meta.data.cover}
+      alt={data.coverAlt ?? ''}
+      widths={[800, 1400, 2000]}
+      sizes="(min-width: 1200px) 1200px, 100vw"
+      loading="eager"
+    />
+
+    {
+      data.metrics.length > 0 && (
+        <section class="metrics" aria-label={t('cases.results')}>
+          {data.metrics.map((m) => (
+            <div class="metric reveal">
+              <strong>{m.value}</strong>
+              <span>{m.label}</span>
+            </div>
+          ))}
+        </section>
+      )
+    }
+
+    <div class="prose case-body reveal" lang={text.locale}>
+      <Content />
+    </div>
+
+    {
+      meta.data.media.length > 0 && (
+        <section class="gallery" aria-label={t('cases.gallery')}>
+          {meta.data.media.map((m) => <Media item={m} from={meta.filePath ?? ''} t={t} />)}
+        </section>
+      )
+    }
+
+    {
+      data.links.length > 0 && (
+        <ul class="case-links">
+          {data.links.map((l) => (
+            <li><a class="link-arrow" href={l.url} rel="noopener" target="_blank">{l.label}</a></li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      next && next.slug !== item.slug && (
+        <a class="next-case" href={caseHref(locale, next.slug)}>
+          <span class="eyebrow">{t('cases.next')}</span>
+          <span class="next-title">{next.text.entry.data.title} →</span>
+        </a>
+      )
+    }
+  </article>
+</Base>

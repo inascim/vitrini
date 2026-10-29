@@ -1,0 +1,40 @@
+meta:
+  title: Ana Exemplo — Marketing Digital
+  description: Estratega de marketing digital especializada en medios pagos, contenido y crecimiento para marcas brasileñas.
+
+hero:
+  role: Estratega de Marketing Digital
+  headline: Campañas que se convierten en *resultados*.
+  intro: Ayudo a las marcas a crecer con medios pagos, contenido para redes sociales y SEO — siempre guiada por datos, nunca por intuición.
+  availability: Disponible para nuevos proyectos
+
+sections:
+  cases:
+    title: Casos
+    intro: Una selección de campañas y proyectos recientes, con los números que importan.
+  contact:
+    title: ¿Hacemos *crecer* tu marca?
+    intro: Cuéntame un poco sobre tu proyecto. Respondo en un día hábil.
+
+services:
+  - title: Medios pagos
+    description: Planificación y gestión de campañas en Meta Ads, Google Ads y TikTok Ads, con foco en ROAS y costo por adquisición.
+  - title: Redes sociales
+    description: Estrategia de contenido, calendario editorial y dirección creativa para Instagram, TikTok y LinkedIn.
+  - title: SEO y contenido
+    description: Auditoría técnica, investigación de palabras clave y contenido que genera tráfico orgánico calificado.
+  - title: CRM y e-mail
+    description: Flujos de relación y automatizaciones que convierten leads en clientes y clientes en fans.
+
+testimonials:
+  - quote: Ana transformó nuestro Black Friday. Alcanzamos la meta de facturación en dos días.
+    name: Marina Costa
+    role: Head de E-commerce, Aurora Calçados
+  - quote: Estrategia clara, informes transparentes y mucha creatividad. La recomiendo sin dudarlo.
+    name: Pedro Almeida
+    role: Fundador, Café Serra Alta
+  - quote: En seis meses, el orgánico se convirtió en nuestro principal canal de nuevos pacientes.
+    name: Dra. Luiza Ramos
+    role: Directora, Clínica Vida Plena
+
+ui: {}

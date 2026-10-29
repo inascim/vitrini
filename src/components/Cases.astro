@@ -1,0 +1,50 @@
+---
+import { config } from '../lib/config';
+import { collectTags, type Case } from '../lib/content';
+import type { Translate } from '../lib/i18n';
+import SectionHeading from './SectionHeading.astro';
+import CaseCard from './CaseCard.astro';
+
+interface Props {
+  cases: Case[];
+  locale: string;
+  t: Translate;
+  text?: { title?: string; intro?: string };
+}
+
+const { cases, locale, t, text } = Astro.props;
+const tags = collectTags(cases);
+const showFilter = cases.length > config.cases.filterThreshold && tags.length > 1;
+---
+
+<section class="section container" id="cases">
+  <SectionHeading title={text?.title ?? t('section.cases')} intro={text?.intro} count={cases.length} />
+  {
+    showFilter && (
+      <div class="filters" role="group">
+        <button type="button" class="chip" aria-pressed="true" data-filter="">{t('cases.all')}</button>
+        {tags.map((tag) => (
+          <button type="button" class="chip" aria-pressed="false" data-filter={tag}>{tag}</button>
+        ))}
+      </div>
+    )
+  }
+  <ul class="case-grid">
+    {cases.map((item, index) => <CaseCard item={item} locale={locale} index={index} />)}
+  </ul>
+</section>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.filters .chip');
+  const cards = document.querySelectorAll<HTMLElement>('.case-card');
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const tag = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      cards.forEach((card) => {
+        const tags: string[] = JSON.parse(card.dataset.tags ?? '[]');
+        card.hidden = Boolean(tag) && !tags.includes(tag!);
+      });
+    }),
+  );
+</script>

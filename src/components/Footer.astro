@@ -1,0 +1,25 @@
+---
+import { config } from '../lib/config';
+import type { Translate } from '../lib/i18n';
+
+interface Props {
+  t: Translate;
+}
+
+const { t } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© {new Date().getFullYear()} {config.name}. {t('footer.rights')}</span>
+    {
+      config.contact.links.length > 0 && (
+        <ul class="footer-links">
+          {config.contact.links.map((l) => (
+            <li><a href={l.url} rel="noopener" target="_blank">{l.label}</a></li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</footer>

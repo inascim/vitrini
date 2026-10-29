@@ -1,0 +1,11 @@
+# Data shared by every language. Text lives in pt.md, en.md, es.md.
+cover: ./cover.jpg
+date: 2025-11-28
+client: Aurora Calçados
+media:
+  - type: image
+    src: ./gallery-1.jpg
+    alt: Creative variations for the campaign
+  - type: image
+    src: ./gallery-2.jpg
+    alt: Landing page for the Black Friday offer

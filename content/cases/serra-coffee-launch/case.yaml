@@ -1,0 +1,17 @@
+cover: ./cover.jpg
+date: 2025-06-10
+client: Café Serra Alta
+media:
+  - type: image
+    src: ./gallery-1.jpg
+    alt: Social media content grid
+  # A post on Instagram or TikTok is shown as a card linking to it.
+  - type: link
+    url: https://www.instagram.com/
+    thumbnail: ./gallery-2.jpg
+  # Videos: put an .mp4 next to this file and use:
+  #   - type: video
+  #     src: ./teaser.mp4
+  # YouTube / Vimeo: use the video ID from the URL:
+  #   - type: youtube
+  #     id: dQw4w9WgXcQ

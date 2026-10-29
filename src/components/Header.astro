@@ -1,0 +1,52 @@
+---
+import { config } from '../lib/config';
+import { localeHref } from '../lib/url';
+import { nativeLanguageName, type Translate } from '../lib/i18n';
+
+interface Props {
+  locale: string;
+  t: Translate;
+  path: string;
+}
+
+const { locale, t, path } = Astro.props;
+const home = localeHref(locale);
+
+const nav = (
+  [
+    ['cases', t('nav.cases')],
+    ['about', t('nav.about')],
+    ['services', t('nav.services')],
+    ['testimonials', t('nav.testimonials')],
+    ['contact', t('nav.contact')],
+  ] as const
+).filter(([id]) => config.sections[id]);
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={home}>{config.name}</a>
+    <nav aria-label="Main">
+      <ul class="nav-list">
+        {nav.map(([id, label]) => <li><a href={`${home}#${id}`}>{label}</a></li>)}
+      </ul>
+    </nav>
+    {
+      config.locales.length > 1 && (
+        <div class="lang" aria-label={t('language.label')} role="group">
+          {config.locales.map((l) => (
+            <a
+              href={localeHref(l, path)}
+              hreflang={l}
+              lang={l}
+              title={nativeLanguageName(l)}
+              aria-current={l === locale ? 'true' : undefined}
+            >
+              {l.toUpperCase()}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</header>

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import type { Case } from '../lib/content';
+import { caseHref } from '../lib/url';
+import { year } from '../lib/format';
+
+interface Props {
+  item: Case;
+  locale: string;
+  index: number;
+}
+
+const { item, locale, index } = Astro.props;
+const { meta, text } = item;
+const data = text.entry.data;
+const highlight = data.metrics[0];
+---
+
+<li class="case-card reveal" data-tags={JSON.stringify(data.tags)}>
+  <a href={caseHref(locale, item.slug)}>
+    <div class="case-cover">
+      <Image
+        src={meta.data.cover}
+        alt={data.coverAlt ?? ''}
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 900px) 50vw, 100vw"
+        loading={index < 2 ? 'eager' : 'lazy'}
+      />
+      {
+        highlight && (
+          <span class="case-metric">
+            <strong>{highlight.value}</strong> {highlight.label}
+          </span>
+        )
+      }
+    </div>
+    <div class="case-info">
+      <h3>{data.title}</h3>
+      <span class="case-year">{year(meta.data.date)}</span>
+    </div>
+    <p class="case-summary">{data.summary}</p>
+    {data.tags.length > 0 && <ul class="tags">{data.tags.map((tag) => <li>{tag}</li>)}</ul>}
+  </a>
+</li>

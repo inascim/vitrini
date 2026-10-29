@@ -1,0 +1,29 @@
+---
+import type { Translate } from '../lib/i18n';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  testimonials: { quote: string; name: string; role?: string }[];
+  t: Translate;
+  text?: { title?: string; intro?: string };
+}
+
+const { testimonials, t, text } = Astro.props;
+---
+
+<section class="section container" id="testimonials">
+  <SectionHeading title={text?.title ?? t('section.testimonials')} intro={text?.intro} />
+  <ul class="testimonials">
+    {
+      testimonials.map((q) => (
+        <li class="testimonial reveal">
+          <blockquote>“{q.quote}”</blockquote>
+          <p class="testimonial-author">
+            <strong>{q.name}</strong>
+            {q.role && <span>{q.role}</span>}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

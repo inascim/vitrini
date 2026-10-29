@@ -1,0 +1,40 @@
+meta:
+  title: Ana Exemplo — Digital Marketing
+  description: Digital marketing strategist specialising in paid media, content and growth for Brazilian brands.
+
+hero:
+  role: Digital Marketing Strategist
+  headline: Campaigns that turn into *results*.
+  intro: I help brands grow through paid media, social content and SEO — always guided by data, never by guesswork.
+  availability: Available for new projects
+
+sections:
+  cases:
+    title: Case studies
+    intro: A selection of recent campaigns and projects, with the numbers that matter.
+  contact:
+    title: Ready to *grow* your brand?
+    intro: Tell me a little about your project. I reply within one business day.
+
+services:
+  - title: Paid media
+    description: Planning and managing Meta Ads, Google Ads and TikTok Ads campaigns, focused on ROAS and cost per acquisition.
+  - title: Social media
+    description: Content strategy, editorial calendars and creative direction for Instagram, TikTok and LinkedIn.
+  - title: SEO & content
+    description: Technical audits, keyword research and content that drives qualified organic traffic.
+  - title: CRM & email
+    description: Lifecycle journeys and automations that turn leads into customers and customers into fans.
+
+testimonials:
+  - quote: Ana transformed our Black Friday. We hit our revenue target in two days.
+    name: Marina Costa
+    role: Head of E-commerce, Aurora Calçados
+  - quote: Clear strategy, transparent reporting and plenty of creativity. I recommend her without hesitation.
+    name: Pedro Almeida
+    role: Founder, Café Serra Alta
+  - quote: Within six months, organic search became our main source of new patients.
+    name: Dr. Luiza Ramos
+    role: Director, Clínica Vida Plena
+
+ui: {}

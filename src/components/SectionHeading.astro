@@ -1,0 +1,19 @@
+---
+import { emphasis } from '../lib/format';
+
+interface Props {
+  title: string;
+  intro?: string;
+  count?: number;
+}
+
+const { title, intro, count } = Astro.props;
+---
+
+<div class="section-heading reveal">
+  <h2>
+    <span set:html={emphasis(title)} />
+    {count !== undefined && <sup class="count">({String(count).padStart(2, '0')})</sup>}
+  </h2>
+  {intro && <p class="section-intro">{intro}</p>}
+</div>

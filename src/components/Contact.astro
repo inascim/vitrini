@@ -1,0 +1,28 @@
+---
+import { config } from '../lib/config';
+import { whatsappHref } from '../lib/url';
+import { emphasis } from '../lib/format';
+import type { Translate } from '../lib/i18n';
+
+interface Props {
+  t: Translate;
+  text?: { title?: string; intro?: string };
+}
+
+const { t, text } = Astro.props;
+const { email, whatsapp, links } = config.contact;
+---
+
+<section class="section container contact" id="contact">
+  <h2 class="contact-title reveal" set:html={emphasis(text?.title ?? t('section.contact'))} />
+  {text?.intro && <p class="section-intro reveal">{text.intro}</p>}
+  {email && <a class="contact-email reveal" href={`mailto:${email}`}>{email}</a>}
+  <div class="contact-actions reveal">
+    {whatsapp && <a class="btn btn-primary" href={whatsappHref(whatsapp)} rel="noopener" target="_blank">{t('contact.whatsapp')}</a>}
+    {
+      links.map((l) => (
+        <a class="link-arrow" href={l.url} rel="noopener" target="_blank">{l.label}</a>
+      ))
+    }
+  </div>
+</section>

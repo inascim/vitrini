@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { resolveVideo } from '../lib/assets';
+import type { Translate } from '../lib/i18n';
+
+interface Props {
+  item: CollectionEntry<'cases'>['data']['media'][number];
+  /** Path of the case.yaml, used to resolve relative video paths. */
+  from: string;
+  t: Translate;
+}
+
+const { item, from, t } = Astro.props;
+
+const platformName = (url: string, platform?: string) => {
+  if (platform) return platform;
+  const host = new URL(url).hostname.replace(/^www\./, '');
+  const known: Record<string, string> = {
+    'instagram.com': 'Instagram',
+    'tiktok.com': 'TikTok',
+    'linkedin.com': 'LinkedIn',
+    'facebook.com': 'Facebook',
+    'x.com': 'X',
+    'twitter.com': 'X',
+    'behance.net': 'Behance',
+  };
+  return known[host] ?? host;
+};
+---
+
+<figure class="media reveal">
+  {item.type === 'image' && <Image src={item.src} alt={item.alt} widths={[800, 1400, 2000]} sizes="(min-width: 1100px) 1100px, 100vw" />}
+  {
+    item.type === 'video' && (
+      <video controls playsinline preload="metadata" src={resolveVideo(item.src, from)} poster={item.poster?.src} />
+    )
+  }
+  {
+    item.type === 'youtube' && (
+      <div class="embed">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${item.id}`}
+          title="YouTube"
+          loading="lazy"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allowfullscreen
+        />
+      </div>
+    )
+  }
+  {
+    item.type === 'vimeo' && (
+      <div class="embed">
+        <iframe src={`https://player.vimeo.com/video/${item.id}?dnt=1`} title="Vimeo" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen />
+      </div>
+    )
+  }
+  {
+    item.type === 'link' && (
+      <a class="media-link" href={item.url} rel="noopener" target="_blank">
+        {item.thumbnail && <Image src={item.thumbnail} alt="" widths={[600, 1000]} sizes="(min-width: 900px) 50vw, 100vw" />}
+        <span class="link-arrow">{t('media.open', { platform: platformName(item.url, item.platform) })}</span>
+      </a>
+    )
+  }
+</figure>

@@ -1,0 +1,80 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Vitrine — site settings
+#
+# This file holds everything that is the same in every language.
+# Text that changes per language lives in content/locales/<locale>.yaml.
+# See AGENTS.md (or README.md) for a full guide.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: Ana Exemplo
+# Photo used in the hero and About section (path from the repository root).
+avatar: content/assets/avatar.jpg
+location: São Paulo, Brasil
+
+# Custom domain, e.g. "anaexemplo.com". Leave empty to use username.github.io.
+domain: ""
+
+# Languages the site is published in. The first visit is redirected to the
+# visitor's browser language when it is listed here, otherwise to defaultLocale.
+# Missing translations fall back to defaultLocale.
+locales: [pt, en, es]
+defaultLocale: pt
+
+# Turn home page sections on or off. The hero is always shown.
+sections:
+  cases: true
+  about: true
+  services: true
+  clients: true
+  testimonials: true
+  contact: true
+
+theme:
+  # editorial | modern | bold | classic
+  preset: editorial
+  # Optional: your brand color as 6-digit hex, e.g. "#d9481e". Empty = preset color.
+  accent: ""
+  # light | dark | system (follows the visitor's device)
+  mode: light
+  # Optional: any Google Fonts family names, e.g. "Playfair Display".
+  fonts:
+    heading: ""
+    body: ""
+
+contact:
+  email: ana@example.com
+  # Full international number; shown as a WhatsApp button.
+  whatsapp: "+55 11 90000-0000"
+  links:
+    - label: Instagram
+      url: https://instagram.com/
+    - label: LinkedIn
+      url: https://www.linkedin.com/
+    - label: TikTok
+      url: https://www.tiktok.com/
+
+# Logos shown in the Clients section (paths from the repository root).
+# A client without a logo is shown by name.
+clients:
+  - name: Aurora Calçados
+    logo: content/assets/logos/aurora.svg
+  - name: Café Serra Alta
+    logo: content/assets/logos/serra-alta.svg
+  - name: Clínica Vida Plena
+    logo: content/assets/logos/vida-plena.svg
+  - name: Rumo Finanças
+    logo: content/assets/logos/rumo.svg
+  - name: Nimbus
+    logo: content/assets/logos/nimbus.svg
+  - name: Casa Boa
+    logo: content/assets/logos/casa-boa.svg
+
+# Optional tracking IDs. When either is set, visitors see a cookie consent
+# banner and the scripts load only after they accept.
+analytics:
+  ga4: ""        # e.g. G-XXXXXXXXXX
+  metaPixel: ""  # e.g. 123456789012345
+
+cases:
+  # Tag filter buttons appear when there are more Cases than this.
+  filterThreshold: 6

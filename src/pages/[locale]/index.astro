@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import Cases from '../../components/Cases.astro';
+import About from '../../components/About.astro';
+import Services from '../../components/Services.astro';
+import Clients from '../../components/Clients.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import Contact from '../../components/Contact.astro';
+import { config } from '../../lib/config';
+import { getCases, getLocaleContent } from '../../lib/content';
+
+export function getStaticPaths() {
+  return config.locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const { entry, t } = await getLocaleContent(locale);
+const content = entry.data;
+const cases = config.sections.cases ? await getCases(locale) : [];
+const on = config.sections;
+---
+
+<Base locale={locale} t={t} title={content.meta.title} description={content.meta.description} path="" image={cases[0]?.meta.data.cover}>
+  <Hero hero={content.hero} t={t} />
+  {on.cases && cases.length > 0 && <Cases cases={cases} locale={locale} t={t} text={content.sections.cases} />}
+  {on.about && <About locale={locale} t={t} text={content.sections.about} />}
+  {on.services && content.services.length > 0 && <Services services={content.services} t={t} text={content.sections.services} />}
+  {on.clients && config.clients.length > 0 && <Clients t={t} text={content.sections.clients} />}
+  {on.testimonials && content.testimonials.length > 0 && <Testimonials testimonials={content.testimonials} t={t} text={content.sections.testimonials} />}
+  {on.contact && <Contact t={t} text={content.sections.contact} />}
+</Base>
